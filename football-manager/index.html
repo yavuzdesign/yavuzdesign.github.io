@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Süper Lig Manager Simülatörü</title>
+  <link rel="stylesheet" href="styles.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+</head>
+<body>
+  <header class="hero">
+    <div class="hero__content">
+      <h1>Süper Lig Manager</h1>
+      <p>Türkiye Süper Ligi'nin tüm takımlarını yönetin, kadroları analiz edin ve gerçek zamanlı 2D simülasyonda taktiğinizi test edin.</p>
+      <div class="hero__badges">
+        <span>20 Takım</span>
+        <span>350+ Oyuncu Profili</span>
+        <span>Dinamik Maç Motoru</span>
+      </div>
+    </div>
+  </header>
+
+  <main class="app">
+    <section class="team-panels">
+      <article class="team-panel" id="home-team-panel">
+        <header>
+          <h2>Ev Sahibi</h2>
+          <select id="home-team-select"></select>
+        </header>
+        <div class="team-meta" id="home-team-meta"></div>
+        <div class="team-attributes" id="home-team-attributes"></div>
+        <div class="squad" id="home-team-squad"></div>
+      </article>
+
+      <section class="match-center">
+        <div class="scoreboard">
+          <div class="scoreboard__teams">
+            <span id="scoreboard-home-name">Galatasaray</span>
+            <span class="scoreboard__score"><span id="score-home">0</span>
+              <span class="scoreboard__divider">-</span>
+              <span id="score-away">0</span></span>
+            <span id="scoreboard-away-name">Fenerbahçe</span>
+          </div>
+          <div class="scoreboard__details">
+            <span id="match-clock">00'</span>
+            <button id="start-match">Maçı Başlat</button>
+          </div>
+        </div>
+        <canvas id="match-canvas" width="760" height="480" aria-label="maç sahası"></canvas>
+        <div class="match-stats">
+          <div class="possession-bar">
+            <div class="possession-bar__home" id="possession-home" style="width: 50%">50%</div>
+            <div class="possession-bar__away" id="possession-away" style="width: 50%">50%</div>
+          </div>
+          <div class="stats-grid" id="match-stats"></div>
+        </div>
+        <div class="match-log">
+          <h3>Maç Olayları</h3>
+          <ul id="match-log"></ul>
+        </div>
+      </section>
+
+      <article class="team-panel" id="away-team-panel">
+        <header>
+          <h2>Deplasman</h2>
+          <select id="away-team-select"></select>
+        </header>
+        <div class="team-meta" id="away-team-meta"></div>
+        <div class="team-attributes" id="away-team-attributes"></div>
+        <div class="squad" id="away-team-squad"></div>
+      </article>
+    </section>
+
+    <section class="league-overview">
+      <div class="league-header">
+        <h2>Süper Lig Genel Bakış</h2>
+        <p>Lig sıralaması, form durumları ve güçlü yönlerin öne çıkanları.</p>
+      </div>
+      <div class="league-content">
+        <div class="league-table">
+          <h3>Güç Sıralaması</h3>
+          <table>
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>Takım</th>
+                <th>Genel</th>
+                <th>Hücum</th>
+                <th>Orta</th>
+                <th>Defans</th>
+              </tr>
+            </thead>
+            <tbody id="power-ranking"></tbody>
+          </table>
+        </div>
+        <div class="fixtures" id="fixtures"></div>
+        <div class="spotlight" id="team-spotlight"></div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <p>Veriler 2023/24 sezonu kadrolarından esinlenmiştir. Bu simülasyon, teknik direktörlüğe adım atmanız için kapsamlı bir temel sunar.</p>
+  </footer>
+
+  <script src="app.js" type="module"></script>
+</body>
+</html>
