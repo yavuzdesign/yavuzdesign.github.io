@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Neo Tavla - Web Tabanlı Tavla Deneyimi</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div id="app">
+    <header class="app-header">
+      <div class="branding">
+        <div class="logo">Neo<span>Tavla</span></div>
+        <p class="tagline">Modern web tabanlı tavla arenası</p>
+      </div>
+      <nav class="header-actions">
+        <button class="ghost" id="showSettings">Yeni Oyun</button>
+        <button class="primary" id="openTutorial">Kuralları Öğren</button>
+      </nav>
+    </header>
+
+    <main class="app-main">
+      <section class="hero" id="setupPanel">
+        <div class="setup-card glass">
+          <h1>Rakibini seç, zarını at, oyuna başla!</h1>
+          <p>NeoTavla klasik tavla hissini modern bir arayüz, zekice otomasyonlar ve çevrimiçi turnuva ruhuyla bir araya getirir.</p>
+
+          <form id="gameSetup">
+            <div class="field-group">
+              <label for="matchType">Maç Tipi</label>
+              <div class="segmented" role="radiogroup">
+                <label><input type="radio" name="matchType" value="human-human" checked><span>Oyuncu vs Oyuncu</span></label>
+                <label><input type="radio" name="matchType" value="human-ai"><span>Oyuncu vs Yapay Zeka</span></label>
+                <label><input type="radio" name="matchType" value="ai-ai"><span>Yapay Zeka Düellosu</span></label>
+              </div>
+            </div>
+
+            <div class="grid two-columns">
+              <div class="field-group">
+                <label for="whiteName">Beyaz Oyuncu</label>
+                <input id="whiteName" type="text" placeholder="Örn. Selin" value="Selin" required>
+              </div>
+              <div class="field-group">
+                <label for="blackName">Siyah Oyuncu</label>
+                <input id="blackName" type="text" placeholder="Örn. Bora" value="Bora" required>
+              </div>
+            </div>
+
+            <div class="field-group">
+              <label>Maç Uzunluğu</label>
+              <div class="segmented" role="radiogroup">
+                <label><input type="radio" name="matchLength" value="3" checked><span>3 Puan</span></label>
+                <label><input type="radio" name="matchLength" value="5"><span>5 Puan</span></label>
+                <label><input type="radio" name="matchLength" value="7"><span>7 Puan</span></label>
+              </div>
+            </div>
+
+            <button class="cta" type="submit">Oyunu Başlat</button>
+          </form>
+        </div>
+      </section>
+
+      <section class="game hidden" id="gameArea">
+        <aside class="side-panel">
+          <div class="player-card" id="whitePanel">
+            <div class="player-meta">
+              <span class="color-indicator white"></span>
+              <h2 class="player-name" id="whiteNameDisplay">Selin</h2>
+            </div>
+            <p class="player-type" id="whiteTypeDisplay">İnsan oyuncu</p>
+            <div class="score-box">
+              <span>Puan</span>
+              <strong id="whiteScore">0</strong>
+            </div>
+            <div class="off-box">
+              <span>Toplanan Pullar</span>
+              <strong id="whiteOff">0</strong>
+            </div>
+          </div>
+
+          <div class="timeline">
+            <h3>Hamle Güncesi</h3>
+            <ul id="moveLog"></ul>
+          </div>
+
+          <div class="control-panel">
+            <button class="primary" id="rollDice">Zar At</button>
+            <button class="ghost" id="endTurn">Hamleyi Bitir</button>
+            <div class="dice-display" id="diceDisplay"></div>
+            <div class="status-line" id="statusLine">Oyuna hazır.</div>
+          </div>
+        </aside>
+
+        <section class="board-wrapper">
+          <div class="current-turn" id="turnIndicator">Hamle sırası: Beyaz</div>
+          <div class="board" id="board"></div>
+          <div class="legend">
+            <div><span class="dot white"></span>Beyaz oyuncu (ileri ↘)</div>
+            <div><span class="dot black"></span>Siyah oyuncu (ileri ↗)</div>
+          </div>
+        </section>
+
+        <aside class="side-panel">
+          <div class="player-card" id="blackPanel">
+            <div class="player-meta">
+              <span class="color-indicator black"></span>
+              <h2 class="player-name" id="blackNameDisplay">Bora</h2>
+            </div>
+            <p class="player-type" id="blackTypeDisplay">İnsan oyuncu</p>
+            <div class="score-box">
+              <span>Puan</span>
+              <strong id="blackScore">0</strong>
+            </div>
+            <div class="off-box">
+              <span>Toplanan Pullar</span>
+              <strong id="blackOff">0</strong>
+            </div>
+          </div>
+
+          <div class="analytics">
+            <h3>Hamle Önerileri</h3>
+            <p id="suggestions">Zar atıldığında öneriler burada belirecek.</p>
+          </div>
+
+          <div class="match-progress">
+            <h3>Seri Durumu</h3>
+            <div class="progress-track">
+              <span class="white" id="whiteProgress"></span>
+              <span class="black" id="blackProgress"></span>
+            </div>
+            <p class="target" id="matchTarget">3 puanlık seri</p>
+          </div>
+        </aside>
+      </section>
+    </main>
+
+    <dialog id="tutorialModal">
+      <div class="modal-header">
+        <h2>Tavla Kuralları &amp; NeoTavla Özellikleri</h2>
+        <button class="icon" id="closeTutorial" aria-label="Kapat">&times;</button>
+      </div>
+      <div class="modal-body">
+        <article>
+          <h3>Kısaca Tavla</h3>
+          <p>Tavlada her oyuncu 15 pul ile başlar. Amaç tüm pulları kendi evinize topladıktan sonra dışarı çıkarmaktır. Zar sonuçlarına göre pullarınızı hareket ettirirken rakibin yalnız pulu üzerine düşerseniz onu bara gönderirsiniz.</p>
+          <h3>NeoTavla Neler Sunar?</h3>
+          <ul>
+            <li>Akıllı hamle doğrulama ve geçerli hamle vurgulama</li>
+            <li>Yapay zeka destekli hızlı rakip</li>
+            <li>Hamle güncesi ve öneriler paneli</li>
+            <li>Modern, dokunmatik uyumlu tasarım</li>
+          </ul>
+        </article>
+      </div>
+    </dialog>
+  </div>
+  <script src="app.js" type="module"></script>
+</body>
+</html>
